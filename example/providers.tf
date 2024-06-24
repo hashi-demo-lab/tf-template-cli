@@ -5,8 +5,13 @@ terraform {
       version = "3.1.1"
     }
   }
-
+  
   cloud {
-          #values set via environment variables
+    hostname = "tfe.simon-lynch.sbx.hashidemos.io"
+    organization = "myorg"
+
+    workspaces {
+      name = "example_workspace"
+    }
   }
 }
