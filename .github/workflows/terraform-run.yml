@@ -1,0 +1,51 @@
+name: "Terraform Run"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, closed]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform-run:
+    name: "Terraform Run"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    env:
+      tfcWorkspaceName: tf-${{ github.head_ref }}
+      tfcOrg: demo-lab-hashicorp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TFE_API_TOKEN }}
+      # Run Terraform Init
+      - name: Terraform Init, create TFC workspace
+        id: tf-init
+        if: github.event_name == 'pull_request'
+        run: |
+          terraform init
+      # Run Terraform Apply
+      - name: Terraform Apply
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        id: tf-apply
+        run: |
+          terraform apply --auto-approve
+      # Runs Terraform output
+      - name: Terraform Output
+        id: output
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        run: |
+          terraform output
+        continue-on-error: true
+      # Creates comments on pull request with Terraform output
