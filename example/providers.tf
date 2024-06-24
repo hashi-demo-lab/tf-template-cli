@@ -5,4 +5,8 @@ terraform {
       version = "3.1.1"
     }
   }
+
+  cloud {
+          #values set via environment variables
+  }
 }
