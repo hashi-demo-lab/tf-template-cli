@@ -23,7 +23,7 @@ jobs:
       tfcOrg: demo-lab-hashicorp
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
