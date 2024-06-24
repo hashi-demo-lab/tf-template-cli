@@ -17,9 +17,6 @@ jobs:
   terraform-run:
     name: "Terraform Run"
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: example
     env:
       TF_CLOUD_ORGANIZATION: myorg
       TF_CLOUD_HOSTNAME: tfe.simon-lynch.sbx.hashidemos.io
