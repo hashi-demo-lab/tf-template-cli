@@ -43,17 +43,20 @@ jobs:
       #  if: github.event_name == 'pull_request'
         run: |
           terraform init
+        working-directory: ./example
       # Run Terraform Apply
       - name: Terraform Apply
       #  if: github.event_name == 'pull_request' && github.event.action != 'closed'
         id: tf-apply
         run: |
           terraform apply --auto-approve
+        working-directory: ./example
       # Runs Terraform output
       - name: Terraform Output
         id: output
       #  if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
           terraform output
+        working-directory: ./example
         continue-on-error: true
       # Creates comments on pull request with Terraform output
