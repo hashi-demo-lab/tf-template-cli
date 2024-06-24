@@ -19,8 +19,12 @@ jobs:
       run:
         working-directory: ./example
     env:
-      tfcWorkspaceName: tf-${{ github.head_ref }}
-      tfcOrg: demo-lab-hashicorp
+      TF_CLOUD_ORGANIZATION: myorg
+      TF_CLOUD_HOSTNAME: tfe.simon-lynch.sbx.hashidemos.io
+      TF_CLOUD_PROJECT: platform_team
+      TF_WORKSPACE: example_workspace
+      TF_TOKEN_tfe_simon-lynch_sbx_hashidemos_io: ${{ secrets.TFE_TOKEN }}
+      TFE_TOKEN:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.7
@@ -28,23 +32,23 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3.1.1
         with:
-          cli_config_credentials_token: ${{ secrets.TFE_API_TOKEN }}
+          cli_config_credentials_token: ${{ secrets.TFE_TOKEN }}
       # Run Terraform Init
       - name: Terraform Init, create TFC workspace
         id: tf-init
-        if: github.event_name == 'pull_request'
+      #  if: github.event_name == 'pull_request'
         run: |
           terraform init
       # Run Terraform Apply
       - name: Terraform Apply
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      #  if: github.event_name == 'pull_request' && github.event.action != 'closed'
         id: tf-apply
         run: |
           terraform apply --auto-approve
       # Runs Terraform output
       - name: Terraform Output
         id: output
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      #  if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
           terraform output
         continue-on-error: true
