@@ -17,16 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./
+        working-directory: ./example
     env:
       tfcWorkspaceName: tf-${{ github.head_ref }}
       tfcOrg: demo-lab-hashicorp
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.7
       # Setup Terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v3.1.1
         with:
           cli_config_credentials_token: ${{ secrets.TFE_API_TOKEN }}
       # Run Terraform Init
