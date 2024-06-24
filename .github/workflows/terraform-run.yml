@@ -34,6 +34,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3.1.1
         with:
+          cli_config_credentials_hostname: 'tfe.simon-lynch.sbx.hashidemos.io'
           cli_config_credentials_token: ${{ secrets.TFE_TOKEN }}
       # Run Terraform Init
       - name: Terraform Init, create TFC workspace
