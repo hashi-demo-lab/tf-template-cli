@@ -25,7 +25,7 @@ jobs:
       TF_TOKEN_tfe_simon-lynch_sbx_hashidemos_io: ${{ secrets.TFE_TOKEN }}
       TFE_TOKEN:
     steps:
-      - name: Update CA certificates
+      - name: Update CA Chain - Trust LetsEncrypt Chain
         run: |
           echo "${{ secrets.ROOT_CA_CERT }}" | sudo tee /usr/local/share/ca-certificates/root_ca.crt > /dev/null
           sudo update-ca-certificates
