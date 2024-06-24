@@ -23,7 +23,7 @@ jobs:
       TF_CLOUD_PROJECT: platform_team
       TF_WORKSPACE: example_workspace
       TF_TOKEN_tfe_simon-lynch_sbx_hashidemos_io: ${{ secrets.TFE_TOKEN }}
-      TFE_TOKEN:
+      TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
     steps:
       - name: Update CA Chain - Trust LetsEncrypt Chain
         run: |
