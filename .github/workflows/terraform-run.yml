@@ -28,6 +28,10 @@ jobs:
       TF_TOKEN_tfe_simon-lynch_sbx_hashidemos_io: ${{ secrets.TFE_TOKEN }}
       TFE_TOKEN:
     steps:
+      - name: Update CA certificates
+        run: |
+          echo "${{ secrets.ROOT_CA_CERT }}" | sudo tee /usr/local/share/ca-certificates/root_ca.crt > /dev/null
+          sudo update-ca-certificates
       - name: Checkout
         uses: actions/checkout@v4.1.7
       # Setup Terraform
